@@ -1,8 +1,10 @@
 const express = require("express");
-const https = require('https');
+const request = require('request');
 const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -11,6 +13,8 @@ app.listen(3000, function(){
     
 })
 
+
+
 app.get("/", (req, res) => {
-    res.send("You've arrived");
+    res.sendFile(__dirname + "/signup.html");
 })
