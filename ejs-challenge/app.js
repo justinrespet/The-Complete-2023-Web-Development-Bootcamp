@@ -32,9 +32,20 @@ app.get("/about", (req, res) => {
 
 // contact route response
 app.get("/contact", (req, res) => {
-  res.render("about", {contactContent: contactStartingContent})
+  res.render("contact", {contactContent: contactStartingContent})
 })
 
+// compose route response
+app.get("/compose", (req, res) => {
+  res.render("compose")
+})
+
+// parse compose page post request
+app.post("/compose", (req, res) => {
+  let newPost = req.body.postTitle
+  console.log(newPost);
+  res.render("compose");
+})
 
 
 
