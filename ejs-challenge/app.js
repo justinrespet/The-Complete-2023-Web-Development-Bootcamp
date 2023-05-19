@@ -5,6 +5,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 
+// global post array
+let posts = [];
+
 // starter content for pages
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
 const aboutStartingContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
@@ -22,7 +25,8 @@ app.use(express.static("public"));
 
 // home route response
 app.get("/", (req, res) => {
-  res.render("home", {homeContent: homeStartingContent})
+  res.render("home", {homeContent: homeStartingContent, 
+                      homeNewPosts: posts})
 })
 
 // about route response
@@ -42,9 +46,23 @@ app.get("/compose", (req, res) => {
 
 // parse compose page post request
 app.post("/compose", (req, res) => {
-  let newPost = req.body.postTitle
-  console.log(newPost);
-  res.render("compose");
+
+  // storing post for json object population
+  let postTitle = req.body.postTitle
+  let postBody = req.body.postBody
+  
+  // json object - I'm guessing for embedded javascript
+  const post = {
+    title: postTitle,
+    content: postBody
+  };
+
+  // add post to posts
+  posts.push(post);
+  res.redirect("/");
+  
+  // res.redirect("/");
+
 })
 
 
