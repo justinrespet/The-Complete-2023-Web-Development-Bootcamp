@@ -37,3 +37,13 @@
 button {
     margin-top : 10px;
 }
+
+/* --------------------------------------------------------------------- */
+
+/* There is a better, javascript based way to achieve this */
+/* .no-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 55%;
+} */

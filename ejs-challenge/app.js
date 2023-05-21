@@ -4,6 +4,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const _ = require('lodash');
 
 // global post array
 let posts = [];
@@ -61,7 +62,37 @@ app.post("/compose", (req, res) => {
   posts.push(post);
   res.redirect("/");
   
-  // res.redirect("/");
+})
+
+// use express routing 
+app.get("/posts/:postName", (req, res) => {
+
+  // lodash lowerCase function
+  let postName = _.lowerCase(req.params.postName);
+  //console.log(postName)
+
+  // data to render
+  let titleRender = "404"
+  let contentRender = "Not found, bucko"
+
+  posts.forEach( (post) => {
+
+    let postTitle = _.lowerCase(post.title);
+    //console.log(post);
+
+    // match on formatted string
+    if (postName == postTitle){
+      //console.log("match found: " + post.title)
+
+      // render with original text
+      titleRender = post.title;
+      contentRender = post.content;
+    }
+  })
+
+  // render it up
+  res.render("post", {postTitle: titleRender, 
+                      postBody: contentRender})
 
 })
 
